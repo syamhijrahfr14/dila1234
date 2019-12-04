@@ -51,8 +51,9 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'contact' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-
+            'captcha' => ['required', 'captcha'],
         ]);
     }
 
@@ -68,11 +69,13 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-
+            'contact' => $data['contact'],
+            
+            
         ]);
     }
     public function refreshCaptcha()
     {
-        return captcha_img('math');
+        return captcha_img('flat');
     }
 }
